@@ -50,25 +50,22 @@ class PigTheGame:
                     break
                 
             else :
-                    #player.addScore(roll)
                     point+=roll
                     print(f"{player.name} rolled a {roll}")
                     pointstoshow=player.score+point
                     print (f"{player.name} scored {pointstoshow} points")
-                    #str=player.__str__()
-                    #print(str)
-                    
-                    if pointstoshow>=10:
+
+                    if pointstoshow>=100:
                         break
 
                      
-            ch=input("Press  'r'  to roll the dice, 'h' to hold : ")
+            ch=input("<------------- Press  'r'  to Roll the dice, 'h' to Hold : --------- : ")
             if ch.lower() == 'h':
                 break
             elif ch.lower() == 'r':
                 continue
             else : 
-                print("\nGame Over!")
+                print("\nGame Crashed!")
                 sys.exit()
         player.score+=point  
 
@@ -78,16 +75,17 @@ class PigTheGame:
   
 
     def play(self):
-        while all(player.score < 10 for player in self.players):
+        while all(player.score < 100 for player in self.players):
             self.play_turn()
 
-        winners = [player for player in self.players if player.score >= 10]
+        winners = [player for player in self.players if player.score >= 100]
         print("\nGame Over!")
         if len(winners) == 1:
             print(f"{winners[0].name} is the winner with {winners[0].score} points!")
 
 
 if __name__ == "__main__":
+    random.seed(0)
     num_players = int(input("Enter the number of players: "))
     game = PigTheGame(num_players)
     game.play()
