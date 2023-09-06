@@ -23,7 +23,7 @@ class Player:
 
 class PigTheGame:
     def __init__(self, num_players):
-        self.players = [Player(input(f"Enter Player {i + 1}'s name: ")) for i in range(num_players)]        self.currentPlayerIndex = 0
+        self.players = [Player(input(f"Enter Player {i + 1}'s name: ")) for i in range(num_players)]
         self.dice = Dice()
         self.current_player = 0
 
@@ -34,18 +34,44 @@ class PigTheGame:
     def play_turn(self):
         player = self.players[self.current_player]
         print(f"{player.name}'s turn.")
-        print (player.__str__)
-        ch=input("Press r to roll the dice, h to hold")
-        if ch.lower()=='r':
+        while (True):
             roll = self.dice.roll()
             if roll == 1:
-                print(f"{player.name} rolled a 1 and lost his turn.")
-                player.points = 0
-            else :
-                player.addScore(roll)
-        elif ch.lower()=='h':   
+                    print(f"{player.name} rolled a 1 and lost his turn.")
+                    player.score = 0
+                    str=player.__str__()
+                    print(str)
+                    break
                 
+            else :
+                    player.addScore(roll)
+                    print(f"{player.name} rolled a {roll}")
+
+            ch=input("Press r to roll the dice, h to hold : ")
+            if ch.lower() == 'h':
+                break
+            elif ch.lower() == 'r':
+                continue
+            else : 
+                sys.exit()
+
+        print(f"{player.name}'s turn is over. {player.name} scored {player.score} points this turn.")
+        self.change_player()    
+
+
+    def play(self):
+        while all(player.score < 100 for player in self.players):
+            self.play_turn()
 
 
 
-   
+        winners = [player for player in self.players if player.score >= 100]
+        print("\nGame Over!")
+        if len(winners) == 1:
+            print(f"{winners[0].name} is the winner with {winners[0].points} points!")
+
+
+if __name__ == "__main__":
+    num_players = int(input("Enter the number of players: "))
+    game = PigTheGame(num_players)
+    game.play()
