@@ -22,10 +22,10 @@ class Player:
 
 class PigTheGame:
     def __init__(self, num_players):
-        self.players = [Player(input(f"Enter Player {i + 1}'s name: ")) for i in range(num_players)]
-        self.dice = Dice()
+        self.num_players = num_players       
         self.current_player = 0
-
+        self.dice = Dice()
+        self.reset_game()
     """def is_game_over(self):
         for player in self.players:
             if player.score >= 10:
@@ -33,6 +33,11 @@ class PigTheGame:
         return False
     
 """
+    def reset_game(self):
+            self.players = [Player(input(f"Enter Player {i + 1}'s name: ")) for i in range(self.num_players)]
+            self.current_player = 0
+
+
     def change_player(self):
         self.current_player = (self.current_player + 1) % len(self.players)
 
@@ -95,6 +100,17 @@ if __name__ == "__main__":
            random.seed(0)
            game = PigTheGame(args.numPlayers)
            game.play()
+           while (True):
+              print ("<................................................................................>")
+              print("Player Another Game with same no of plyers ? Press y to Play, otherwise presss anything to exit ")
+              ch = input().lower()
+              if ch == 'y':
+                game = PigTheGame(args.numPlayers)
+                game.play()
+              else : 
+                  break   
     else:
         print("Exiting the program.")
         sys.exit()
+
+
