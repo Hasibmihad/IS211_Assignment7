@@ -1,6 +1,6 @@
 import random
 import sys
-
+import argparse
 
 class Dice:
     def roll(self):
@@ -70,6 +70,7 @@ class PigTheGame:
         player.score+=point  
 
         print(f"{player.name}'s turn is over. {player.name} scored {player.score}.")
+        print ("<................................................................................>")
         self.change_player()  
 
   
@@ -85,7 +86,15 @@ class PigTheGame:
 
 
 if __name__ == "__main__":
-    random.seed(0)
-    num_players = int(input("Enter the number of players: "))
-    game = PigTheGame(num_players)
-    game.play()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("numPlayers", type=int, help="numberofPlayers")
+    args = parser.parse_args()
+    if args.numPlayers:
+           print ("Welcome T0 The PIG GAME")
+           print ("<................................................................................>")
+           random.seed(0)
+           game = PigTheGame(args.numPlayers)
+           game.play()
+    else:
+        print("Exiting the program.")
+        sys.exit()
